@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Child Details</title>
+    <style>
+        :root {
+            --primary-color: #4a89dc;
+            --secondary-color: #48cfad;
+            --accent-color: #ed5565;
+            --background-color: #f5f7fa;
+            --card-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s ease;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
+            position: relative;
+            color: #333;
+        }
+
+        .logo {
+            position: absolute;
+            top: 30px;
+            left: 30px;
+            cursor: pointer;
+            height: 60px;
+            width: auto;
+            transition: var(--transition);
+        }
+
+        .logo:hover {
+            transform: scale(1.05);
+        }
+
+        .card {
+            width: 90%;
+            max-width: 500px;
+            background: rgba(255, 255, 255, 0.95);
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: var(--card-shadow);
+            text-align: center;
+            margin-top: 60px;
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        h2 {
+            margin-bottom: 25px;
+            font-size: 26px;
+            color: #2c3e50;
+            position: relative;
+            padding-bottom: 10px;
+        }
+
+        h2::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 3px;
+            background: var(--secondary-color);
+        }
+
+        .input-group {
+            text-align: left;
+            margin-bottom: 20px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        label {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: #34495e;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 12px 15px;
+            font-size: 16px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            box-sizing: border-box;
+            transition: var(--transition);
+            background-color: #f9f9f9;
+        }
+
+        input:focus, select:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            background-color: white;
+            box-shadow: 0 0 0 3px rgba(74, 137, 220, 0.1);
+        }
+
+        .months-display {
+            margin-top: 8px;
+            padding: 12px;
+            background-color: #f0f8ff;
+            border-radius: 8px;
+            border: 2px solid #e0e0e0;
+            font-weight: 500;
+            color: #2c3e50;
+        }
+
+        .submit-btn {
+            display: block;
+            width: 100%;
+            padding: 14px;
+            margin-top: 25px;
+            background: linear-gradient(to right, var(--primary-color), var(--secondary-color));
+            color: white;
+            font-size: 18px;
+            font-weight: 600;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: var(--transition);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .submit-btn:hover {
+            background: linear-gradient(to right, #3a70c2, #3dbd99);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        .submit-btn:active {
+            transform: translateY(0);
+        }
+
+        @media (max-width: 600px) {
+            .card {
+                padding: 30px 20px;
+            }
+            
+            .logo {
+                height: 50px;
+                top: 20px;
+                left: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Logo in top left corner -->
+    <img src="abs.png" alt="Logo" class="logo" onclick="window.location.href='Homepage.html'">
+
+    <div class="card">
+        <h2>Child Details</h2>
+        <form id="childForm">
+            <div class="input-group">
+                <label for="childName">Name</label>
+                <input type="text" id="childName" name="childName" required placeholder="Enter child's name">
+            </div>
+            <div class="input-group">
+                <label for="childAgeYears">Age (years)</label>
+                <input type="number" id="childAgeYears" name="childAgeYears" required min="0" max="18" step="0.01" placeholder="0.00">
+                <div class="months-display">Age in months: <span id="ageMonthsDisplay">0</span></div>
+            </div>
+            <div class="input-group">
+                <label for="childGender">Gender</label>
+                <select id="childGender" name="childGender" required>
+                    <option value="" disabled selected>Select gender</option>
+                    <option value="Male">Male</option>
+                    <option value="Female">Female</option>
+                    <option value="Other">Other</option>
+                </select>
+            </div>
+            <div class="input-group">
+                <label for="childRegion">Ethnicity/Region</label>
+                <input type="text" id="childRegion" name="childRegion" required placeholder="Enter child's ethnicity or region">
+            </div>
+            <button type="submit" class="submit-btn">Submit</button>
+        </form>
+    </div>
+
+    <script>
+        // Calculate months when years changes
+        document.getElementById("childAgeYears").addEventListener("input", function() {
+            const years = parseFloat(this.value) || 0;
+            const months = Math.round(years * 12);
+            document.getElementById("ageMonthsDisplay").textContent = months;
+        });
+
+        // Also calculate months when the form loads in case there's a default value
+        document.addEventListener("DOMContentLoaded", function() {
+            const yearsInput = document.getElementById("childAgeYears");
+            const years = parseFloat(yearsInput.value) || 0;
+            const months = Math.round(years * 12);
+            document.getElementById("ageMonthsDisplay").textContent = months;
+        });
+
+        document.getElementById("childForm").addEventListener("submit", function(event) {
+            event.preventDefault();
+
+            const childDetails = {
+                name: document.getElementById("childName").value,
+                ageYears: document.getElementById("childAgeYears").value,
+                ageMonths: document.getElementById("ageMonthsDisplay").textContent,
+                gender: document.getElementById("childGender").value,
+                region: document.getElementById("childRegion").value,
+            };
+
+            localStorage.setItem("childDetails", JSON.stringify(childDetails));
+
+            window.location.href = "qchat102.html";
+        });
+    </script>
+</body>
+</html>

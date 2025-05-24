@@ -1,0 +1,309 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Q-CHAT-10</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #ce6c2b;
+            --secondary-color: #2c3e50;
+            --accent-color: #e67e22;
+            --light-color: #f9f9f9;
+            --dark-color: #333;
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s ease;
+        }
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, #f5f7fa 0%, #f0e6dd 100%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            color: var(--dark-color);
+            line-height: 1.6;
+        }
+        
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: var(--secondary-color);
+            padding: 15px 10%;
+            position: fixed;
+            width: 80%;
+            top: 0;
+            box-shadow: var(--shadow);
+            z-index: 1100;
+            border-radius: 0 0 15px 15px;
+            transition: var(--transition);
+        }
+
+        .navbar.scrolled {
+            padding: 10px 10%;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        .logo {
+            height: 50px;
+            transition: var(--transition);
+        }
+
+        .logo:hover {
+            transform: scale(1.05);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 15px;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: white;
+            font-size: 16px;
+            font-weight: 500;
+            padding: 10px 20px;
+            border-radius: 30px;
+            transition: var(--transition);
+            background-color: rgba(255, 255, 255, 0.1);
+            border: 2px solid transparent;
+            letter-spacing: 0.5px;
+        }
+
+        .nav-links a:hover {
+            background-color: var(--primary-color);
+            color: white;
+            border-color: white;
+            transform: translateY(-3px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        .nav-links a:active {
+            transform: translateY(0);
+        }
+
+        .content {
+            padding: 150px 20px 100px;
+            text-align: center;
+            width: 90%;
+            max-width: 1000px;
+            animation: fadeIn 0.8s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .card {
+            background: white;
+            padding: 50px;
+            border-radius: 20px;
+            box-shadow: var(--shadow);
+            width: 100%;
+            margin: 0 auto;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 5px;
+            height: 100%;
+            background: var(--primary-color);
+        }
+
+        .card h2 {
+            font-size: 36px;
+            margin-bottom: 30px;
+            color: var(--secondary-color);
+            position: relative;
+            display: inline-block;
+        }
+
+        .card h2::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background: var(--primary-color);
+            border-radius: 2px;
+        }
+
+        .card p {
+            font-size: 18px;
+            line-height: 1.8;
+            color: #555;
+            margin-bottom: 25px;
+            text-align: justify;
+        }
+
+        .card p:first-of-type::first-letter {
+            font-size: 250%;
+            color: var(--primary-color);
+            float: left;
+            line-height: 0.8;
+            margin-right: 8px;
+            margin-top: 4px;
+            font-weight: bold;
+        }
+
+        footer {
+            background-color: var(--secondary-color);
+            color: white;
+            text-align: center;
+            padding: 25px;
+            width: 100%;
+            margin-top: auto;
+            font-size: 14px;
+        }
+
+        footer p {
+            margin: 5px 0;
+        }
+
+        .highlight-box {
+            background: rgba(206, 108, 43, 0.1);
+            border-left: 4px solid var(--primary-color);
+            padding: 20px;
+            margin: 30px 0;
+            border-radius: 0 8px 8px 0;
+        }
+
+        .highlight-box p {
+            margin: 0;
+            font-style: italic;
+            color: var(--secondary-color);
+            font-weight: 500;
+        }
+
+        @media (max-width: 768px) {
+            .navbar {
+                flex-direction: column;
+                padding: 15px;
+                width: 100%;
+                border-radius: 0;
+            }
+            
+            .nav-links {
+                margin-top: 15px;
+                width: 100%;
+                justify-content: center;
+                flex-wrap: wrap;
+            }
+            
+            .nav-links a {
+                padding: 8px 15px;
+                font-size: 14px;
+            }
+            
+            .content {
+                padding: 150px 15px 80px;
+            }
+            
+            .card {
+                padding: 25px;
+            }
+            
+            .card h2 {
+                font-size: 28px;
+            }
+            
+            .card p {
+                font-size: 16px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .card {
+                padding: 20px 15px;
+            }
+            
+            .card h2 {
+                font-size: 24px;
+            }
+            
+            .card p {
+                font-size: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="navbar" id="navbar">
+        <a href="Homepage.html">
+            <img src="abs.png" alt="Q-CHAT-10 Logo" class="logo">
+        </a>
+        <div class="nav-links">
+            <a href="Homepage.html">Home</a>
+            <a href="Aboutqchat10.html">About Q-CHAT-10</a> 
+        </div>
+    </div>
+
+     <div class="content">
+        <div class="card">
+            <h2>About the site</h2>
+                <p>ASD Insight:  Early Detection of Autism Spectrum Disorder (ASD)
+
+                    Welcome to "ASD Insight", an innovative platform dedicated to the early detection and understanding of Autism Spectrum Disorder (ASD). Our mission is to provide families, caregivers, and professionals with the tools to identify potential signs of ASD in a timely and effective manner.</p>
+                   
+                <p> How It Works:
+                    At "ASD Insight", we leverage cutting-edge technology to assist in the early identification of autism. By using a simple and interactive questionnaire, "QChat 10", users can answer a series of carefully designed questions that assess key behavioral and developmental indicators of ASD.</p>
+
+                <p> QChat 10: The Power of Early Screening
+                        "QChat 10" is an evidence-based tool used for screening children between 18 months and 5 years of age. It includes a set of 10 targeted questions related to social communication, behavior, and developmental milestones. This quick, accessible questionnaire provides valuable insights into early warning signs of ASD, helping parents and caregivers detect the need for further evaluation.</p>
+
+                <p> SVM Algorithm: Accurate Predictions with Machine Learning
+                            Once the questionnaire is completed, "ASD Insight" uses a sophisticated **Support Vector Machine "(SVM)" algorithm to analyze the responses. SVM is a machine learning model that is known for its high accuracy in classifying data. It evaluates the answers provided in the "QChat 10" and categorizes the likelihood of an individual being on the autism spectrum.
+                </p>
+                <p>SVM Algorithm: Accurate Predictions with Machine Learning
+                    Once the questionnaire is completed, "ASD Insight" uses a sophisticated **Support Vector Machine "(SVM)" algorithm to analyze the responses. SVM is a machine learning model that is known for its high accuracy in classifying data. It evaluates the answers provided in the "QChat 10" and categorizes the likelihood of an individual being on the autism spectrum.
+                    The SVM algorithm works by finding the optimal hyperplane that separates the data into different classes (such as "Autistic" or "Non-Autistic") based on the patterns detected in the answers. The result is a predictive, data-driven outcome that provides users with a clear indication of whether further medical consultation or intervention is recommended.
+               
+                </p>
+                <p> Key Features of ASD Insight:
+                    - "Quick and Easy": The QChat 10 questionnaire takes just a few minutes to complete, making early detection accessible to anyone.
+                    - "Data-Driven Accuracy": By combining the QChat 10 with the power of the SVM algorithm, ASD Insight delivers reliable and accurate predictions for early ASD identification.
+                    - "Confidential and Secure": Your data is processed securely, ensuring privacy and confidentiality at all times.
+                    - "Actionable Recommendations": Based on the results, ASD Insight provides personalized next steps, which could include additional resources, tips for early intervention, or referrals to healthcare professionals.
+                    </p>
+               
+                    <p>Why Early Detection Matters:
+                        Early detection of autism is crucial for providing children with the best chance to thrive. Research has shown that early intervention—such as therapy, educational support, and behavioral programs—can significantly improve outcomes for individuals with ASD. By using "ASD Insight", families and caregivers can take proactive steps towards supporting the development of children at an early age.  </p>
+
+                    <p> Get Started:
+                        Start your journey toward understanding and supporting your child's development by visiting "ASD Insight" today. Simply complete the "QChat 10" questionnaire, and let our SVM-powered insights guide you toward informed decisions about the next steps.</p>
+
+                    <p> At "ASD Insight", we're here to help you make a difference in the life of a child. Early detection can lead to better opportunities and outcomes, and we are proud to be part of this transformative process.</p>          
+            </div>
+        </div>
+    <footer>
+        <p>&copy; 2025 Q-CHAT-10 Autism Screening Tool</p>
+        <p>For professional use only - Not a diagnostic instrument</p>
+    </footer>
+
+    <script>
+        window.addEventListener('scroll', function() {
+            const navbar = document.getElementById('navbar');
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+    </script>
+</body>
+</html>

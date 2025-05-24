@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Q-CHAT-10</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #ce6c2b;
+            --secondary-color: #2c3e50;
+            --accent-color: #e67e22;
+            --light-color: #f9f9f9;
+            --dark-color: #333;
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s ease;
+        }
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, #f5f7fa 0%, #f0e6dd 100%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            color: var(--dark-color);
+            line-height: 1.6;
+        }
+        
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: var(--secondary-color);
+            padding: 15px 10%;
+            position: fixed;
+            width: 80%;
+            top: 0;
+            box-shadow: var(--shadow);
+            z-index: 1100;
+            border-radius: 0 0 15px 15px;
+            transition: var(--transition);
+        }
+
+        .navbar.scrolled {
+            padding: 10px 10%;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        .logo {
+            height: 50px;
+            transition: var(--transition);
+        }
+
+        .logo:hover {
+            transform: scale(1.05);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 15px;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: white;
+            font-size: 16px;
+            font-weight: 500;
+            padding: 10px 20px;
+            border-radius: 30px;
+            transition: var(--transition);
+            background-color: rgba(255, 255, 255, 0.1);
+            border: 2px solid transparent;
+            letter-spacing: 0.5px;
+        }
+
+        .nav-links a:hover {
+            background-color: var(--primary-color);
+            color: white;
+            border-color: white;
+            transform: translateY(-3px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        .nav-links a:active {
+            transform: translateY(0);
+        }
+
+        .content {
+            padding: 150px 20px 100px;
+            text-align: center;
+            width: 90%;
+            max-width: 1000px;
+            animation: fadeIn 0.8s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .card {
+            background: white;
+            padding: 50px;
+            border-radius: 20px;
+            box-shadow: var(--shadow);
+            width: 100%;
+            margin: 0 auto;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 5px;
+            height: 100%;
+            background: var(--primary-color);
+        }
+
+        .card h2 {
+            font-size: 36px;
+            margin-bottom: 30px;
+            color: var(--secondary-color);
+            position: relative;
+            display: inline-block;
+        }
+
+        .card h2::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background: var(--primary-color);
+            border-radius: 2px;
+        }
+
+        .card p {
+            font-size: 18px;
+            line-height: 1.8;
+            color: #555;
+            margin-bottom: 25px;
+            text-align: justify;
+        }
+
+        .card p:first-of-type::first-letter {
+            font-size: 250%;
+            color: var(--primary-color);
+            float: left;
+            line-height: 0.8;
+            margin-right: 8px;
+            margin-top: 4px;
+            font-weight: bold;
+        }
+
+        footer {
+            background-color: var(--secondary-color);
+            color: white;
+            text-align: center;
+            padding: 25px;
+            width: 100%;
+            margin-top: auto;
+            font-size: 14px;
+        }
+
+        footer p {
+            margin: 5px 0;
+        }
+
+        .highlight-box {
+            background: rgba(206, 108, 43, 0.1);
+            border-left: 4px solid var(--primary-color);
+            padding: 20px;
+            margin: 30px 0;
+            border-radius: 0 8px 8px 0;
+        }
+
+        .highlight-box p {
+            margin: 0;
+            font-style: italic;
+            color: var(--secondary-color);
+            font-weight: 500;
+        }
+
+        @media (max-width: 768px) {
+            .navbar {
+                flex-direction: column;
+                padding: 15px;
+                width: 100%;
+                border-radius: 0;
+            }
+            
+            .nav-links {
+                margin-top: 15px;
+                width: 100%;
+                justify-content: center;
+                flex-wrap: wrap;
+            }
+            
+            .nav-links a {
+                padding: 8px 15px;
+                font-size: 14px;
+            }
+            
+            .content {
+                padding: 150px 15px 80px;
+            }
+            
+            .card {
+                padding: 25px;
+            }
+            
+            .card h2 {
+                font-size: 28px;
+            }
+            
+            .card p {
+                font-size: 16px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .card {
+                padding: 20px 15px;
+            }
+            
+            .card h2 {
+                font-size: 24px;
+            }
+            
+            .card p {
+                font-size: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="navbar" id="navbar">
+        <a href="Homepage.html">
+            <img src="abs.png" alt="Q-CHAT-10 Logo" class="logo">
+        </a>
+        <div class="nav-links">
+            <a href="Homepage.html">Home</a>
+            <a href="Aboutsite.html">About the site</a>
+        </div>
+    </div>
+
+    <div class="content">
+        <div class="card">
+            <h2>About Q-CHAT-10</h2>
+            <p>
+                The Q-CHAT-10 (Quantitative Checklist for Autism in Toddlers) is a brief screening tool that helps identify children who may be at risk for Autism Spectrum Disorder (ASD). The tool consists of 10 carefully crafted questions designed to evaluate the development and behaviors typically associated with ASD. This checklist is typically filled out by parents or caregivers and serves as an important first step in recognizing potential developmental concerns.
+            </p>
+            
+            <div class="highlight-box">
+                <p>"Early identification through tools like Q-CHAT-10 can lead to timely interventions that significantly improve developmental outcomes for children with ASD."</p>
+            </div>
+            
+            <p>
+                The questions in the Q-CHAT-10 assess three key areas: communication skills, social interaction patterns, and behavioral characteristics. These domains are crucial in identifying autism spectrum conditions. The tool is designed for toddlers aged 18-24 months, a critical window for early detection and intervention.
+            </p>
+            <p>
+                It's important to understand that the Q-CHAT-10 is a screening instrument, not a diagnostic tool. A score within the clinical range suggests that a comprehensive evaluation by a qualified healthcare professional or autism specialist is recommended. The tool has been validated through extensive research and demonstrates good sensitivity and specificity in identifying children who may benefit from further assessment.
+            </p>
+            <p>
+                Developed by the Autism Research Centre at the University of Cambridge, the Q-CHAT-10 represents a refinement of the original Q-CHAT, optimized for brevity while maintaining strong psychometric properties. The 10-item version was created to facilitate quick administration in busy clinical settings while still providing valuable screening information.
+            </p>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2025 Q-CHAT-10 Autism Screening Tool</p>
+        <p>For professional use only - Not a diagnostic instrument</p>
+    </footer>
+
+    <script>
+        window.addEventListener('scroll', function() {
+            const navbar = document.getElementById('navbar');
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+    </script>
+</body>
+</html>
