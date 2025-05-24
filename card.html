@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Autism Spectrum Quotient Assessment</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #4a89dc;
+            --primary-dark: #3b6cb0;
+            --secondary-color: #48cfad;
+            --accent-color: #ff6b6b;
+            --light-color: #f5f7fa;
+            --dark-color: #2c3e50;
+            --text-color: #34495e;
+            --gray-light: #ecf0f1;
+            --shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s ease;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #e6f7ff;
+            color: var(--text-color);
+            line-height: 1.6;
+            min-height: 100vh;
+            padding: 40px 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        .logo {
+            position: absolute;
+            top: 30px;
+            left: 30px;
+            width: 80px;
+            height: auto;
+            cursor: pointer;
+            transition: var(--transition);
+            filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
+        }
+        
+        .logo:hover {
+            transform: scale(1.05);
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+            max-width: 800px;
+        }
+        
+        .header h1 {
+            font-size: 2.5rem;
+            color: var(--dark-color);
+            margin-bottom: 15px;
+            font-weight: 700;
+        }
+        
+        .header p {
+            font-size: 1.1rem;
+            color: var(--text-color);
+            opacity: 0.9;
+        }
+        
+        .container {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 30px;
+            width: 100%;
+            max-width: 1200px;
+        }
+        
+        .card {
+            width: 100%;
+            max-width: 450px;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            background-color: white;
+            transition: var(--transition);
+            position: relative;
+        }
+        
+        .card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+        }
+        
+        .card-badge {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background-color: var(--accent-color);
+            color: white;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            z-index: 2;
+        }
+        
+        .card-img {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+            transition: var(--transition);
+        }
+        
+        .card:hover .card-img {
+            transform: scale(1.03);
+        }
+        
+        .card-content {
+            padding: 25px;
+            text-align: center;
+        }
+        
+        .card h2 {
+            font-size: 1.5rem;
+            color: var(--dark-color);
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
+        
+        .card p {
+            font-size: 1rem;
+            color: var(--text-color);
+            margin-bottom: 15px;
+            opacity: 0.9;
+        }
+        
+        .card p strong {
+            color: var(--primary-dark);
+            font-weight: 600;
+        }
+        
+        .start-btn {
+            display: inline-block;
+            background-color: var(--primary-color);
+            color: white;
+            font-size: 1rem;
+            padding: 12px 30px;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            text-decoration: none;
+            font-weight: 600;
+            margin-top: 15px;
+            transition: var(--transition);
+            box-shadow: 0 4px 15px rgba(74, 137, 220, 0.3);
+        }
+        
+        .start-btn:hover {
+            background-color: var(--primary-dark);
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(74, 137, 220, 0.4);
+        }
+        
+        .features {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 20px;
+            margin-top: 40px;
+            max-width: 800px;
+        }
+        
+        .feature-item {
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: var(--shadow);
+            text-align: center;
+            width: 180px;
+            transition: var(--transition);
+        }
+        
+        .feature-item:hover {
+            transform: translateY(-5px);
+        }
+        
+        .feature-icon {
+            font-size: 2rem;
+            color: var(--primary-color);
+            margin-bottom: 10px;
+        }
+        
+        .feature-item p {
+            font-size: 0.9rem;
+            color: var(--text-color);
+        }
+        
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2rem;
+            }
+            
+            .header p {
+                font-size: 1rem;
+            }
+            
+            .logo {
+                width: 70px;
+                top: 20px;
+                left: 20px;
+            }
+            
+            .card {
+                max-width: 100%;
+            }
+            
+            .card-img {
+                height: 200px;
+            }
+            
+            .features {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .feature-item {
+                width: 100%;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            body {
+                padding: 30px 15px;
+            }
+            
+            .header h1 {
+                font-size: 1.8rem;
+            }
+            
+            .logo {
+                width: 60px;
+            }
+            
+            .card-content {
+                padding: 20px;
+            }
+            
+            .card h2 {
+                font-size: 1.3rem;
+            }
+            
+            .start-btn {
+                padding: 10px 25px;
+                font-size: 0.9rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <a href="Homepage.html">
+        <img src="abs.png" alt="ASD Insight Logo" class="logo">
+    </a>
+
+    <div class="header">
+        <h1>Autism Spectrum Quotient Assessments</h1>
+        <p>Select the assessment that best fits your needs to measure autistic traits</p>
+    </div>
+
+    <div class="container">
+        <div class="card">
+            <div class="card-badge">Standard</div>
+            <img src="10.jpg" alt="AQ-10 Assessment" class="card-img">
+            <div class="card-content">
+                <h2>Autism Spectrum Quotient (AQ-10)</h2>
+                <p><strong>10 clinically-validated questions</strong></p>
+                <p>A concise screening tool designed to identify autistic traits in adults and adolescents.</p>
+                <p>Takes approximately 5 minutes to complete.</p>
+                <p>Used by healthcare professionals worldwide.</p>
+                <a href="details2.html" class="start-btn">Begin Assessment</a>
+            </div>
+        </div>
+        
+        <div class="card">
+            <div class="card-badge">Extended</div>
+            <img src="20.jpg" alt="AQ-20 Assessment" class="card-img">
+            <div class="card-content">
+                <h2>Autism Spectrum Quotient (AQ-20)</h2>
+                <p><strong>20 comprehensive questions</strong></p>
+                <p>An extended version providing more detailed insight into autistic traits.</p>
+                <p>Takes approximately 10 minutes to complete.</p>
+                <p>Offers greater sensitivity for borderline cases.</p>
+                <a href="details3.html" class="start-btn">Begin Assessment</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="features">
+        <div class="feature-item">
+            <div class="feature-icon">⌛</div>
+            <p>Quick Completion</p>
+        </div>
+        <div class="feature-item">
+            <div class="feature-icon">🔒</div>
+            <p>Confidential</p>
+        </div>
+        <div class="feature-item">
+            <div class="feature-icon">📊</div>
+            <p>Immediate Results</p>
+        </div>
+    </div>
+</body>
+</html>
