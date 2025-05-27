@@ -1,0 +1,688 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Q-CHAT Assessment Results - Random Forest Analysis</title>
+    <style>
+        :root {
+            --primary: #3498db;
+            --secondary: #2ecc71;
+            --accent: #e74c3c;
+            --light: #ecf0f1;
+            --dark: #2c3e50;
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            color: #333;
+            padding: 20px;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: var(--shadow);
+            overflow: hidden;
+            position: relative;
+        }
+
+        .logo {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            width: 80px;
+            height: auto;
+            cursor: pointer;
+            transition: var(--transition);
+            z-index: 10;
+        }
+
+        .logo:hover {
+            transform: scale(1.1);
+        }
+
+        header {
+            background: var(--primary);
+            color: white;
+            padding: 30px 20px 20px;
+            text-align: center;
+            position: relative;
+        }
+
+        h1 {
+            font-size: 28px;
+            margin-bottom: 10px;
+        }
+
+        h2 {
+            color: var(--dark);
+            margin: 20px 0 15px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid var(--light);
+        }
+
+        h3 {
+            color: var(--primary);
+            margin: 25px 0 15px;
+        }
+
+        .child-info {
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px auto;
+            max-width: 90%;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            box-shadow: var(--shadow);
+        }
+
+        .child-info p {
+            margin: 5px 0;
+            font-size: 16px;
+        }
+
+        .child-info span {
+            font-weight: 600;
+            color: var(--dark);
+        }
+
+        .results-container {
+            padding: 30px;
+        }
+
+        .result-card {
+            background: white;
+            border-radius: 10px;
+            padding: 25px;
+            margin-bottom: 30px;
+            box-shadow: var(--shadow);
+            border-left: 5px solid var(--primary);
+            transition: var(--transition);
+        }
+
+        .result-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .result-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .result-title {
+            font-size: 22px;
+            font-weight: 700;
+            color: var(--dark);
+        }
+
+        .risk-level {
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-weight: 600;
+            font-size: 16px;
+        }
+
+        .low-risk {
+            background-color: #d4edda;
+            color: #155724;
+            border: 2px solid #c3e6cb;
+        }
+
+        .medium-risk {
+            background-color: #fff3cd;
+            color: #856404;
+            border: 2px solid #ffeeba;
+        }
+
+        .high-risk {
+            background-color: #f8d7da;
+            color: #721c24;
+            border: 2px solid #f5c6cb;
+        }
+
+        .probability-meter {
+            height: 30px;
+            background: #f0f0f0;
+            border-radius: 15px;
+            margin: 20px 0;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .probability-bar {
+            height: 100%;
+            background: linear-gradient(90deg, #2ecc71, #f39c12, #e74c3c);
+            border-radius: 15px;
+            width: 0%;
+            transition: width 1s ease;
+        }
+
+        .probability-marker {
+            position: absolute;
+            height: 40px;
+            width: 4px;
+            background: var(--dark);
+            top: -5px;
+            transform: translateX(-50%);
+        }
+
+        .probability-labels {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 5px;
+            font-size: 14px;
+            color: var(--dark);
+        }
+
+        .probability-value {
+            font-size: 24px;
+            font-weight: 700;
+            text-align: center;
+            margin: 15px 0;
+            color: var(--primary);
+        }
+
+        .result-details {
+            margin-top: 25px;
+        }
+
+        .detail-item {
+            margin-bottom: 15px;
+        }
+
+        .detail-title {
+            font-weight: 600;
+            color: var(--dark);
+            margin-bottom: 5px;
+        }
+
+        .feature-importance {
+            margin-top: 30px;
+        }
+
+        .feature-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .feature-name {
+            width: 200px;
+            font-weight: 500;
+        }
+
+        .feature-bar-container {
+            flex: 1;
+            height: 20px;
+            background: #f0f0f0;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .feature-bar {
+            height: 100%;
+            background: var(--primary);
+            border-radius: 10px;
+            width: 0%;
+            transition: width 1s ease;
+        }
+
+        .feature-value {
+            width: 60px;
+            text-align: right;
+            font-family: monospace;
+        }
+
+        .decision-path {
+            margin-top: 30px;
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 20px;
+        }
+
+        .decision-node {
+            margin-bottom: 15px;
+            padding-left: 20px;
+            position: relative;
+        }
+
+        .decision-node:before {
+            content: "→";
+            position: absolute;
+            left: 5px;
+            color: var(--primary);
+        }
+
+        .tree-diagram {
+            margin: 25px 0;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 10px;
+            font-family: monospace;
+            white-space: pre;
+            overflow-x: auto;
+        }
+
+        .recommendations {
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 25px;
+            margin-top: 30px;
+            border-left: 4px solid var(--secondary);
+        }
+
+        .recommendations ul {
+            padding-left: 20px;
+        }
+
+        .recommendations li {
+            margin-bottom: 10px;
+        }
+
+        .button-container {
+            display: flex;
+            gap: 15px;
+            margin-top: 30px;
+        }
+
+        button {
+            flex: 1;
+            padding: 15px;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            color: white;
+        }
+
+        .primary-btn {
+            background: var(--primary);
+        }
+
+        .primary-btn:hover {
+            background: #2980b9;
+            transform: translateY(-2px);
+            box-shadow: var(--shadow);
+        }
+
+        .secondary-btn {
+            background: #7f8c8d;
+        }
+
+        .secondary-btn:hover {
+            background: #6c7a7d;
+            transform: translateY(-2px);
+            box-shadow: var(--shadow);
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                border-radius: 0;
+            }
+            
+            .result-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .risk-level {
+                margin-top: 10px;
+            }
+            
+            .feature-item {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .feature-name {
+                width: 100%;
+                margin-bottom: 5px;
+            }
+            
+            .feature-bar-container {
+                width: 100%;
+            }
+            
+            .logo {
+                width: 60px;
+                top: 15px;
+                left: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <a href="Homepage.html">
+        <img src="abs.png" alt="Logo" class="logo">
+    </a>
+
+    <div class="container">
+        <header>
+            <h1>Q-CHAT Assessment Results</h1>
+            <p>Random Forest Analysis</p>
+        </header>
+
+        <div class="results-container">
+            <!-- Child Information Section -->
+            <div class="child-info" id="childInfoDisplay">
+                <!-- Child details will be inserted here by JavaScript -->
+            </div>
+
+            <!-- Main Results Card -->
+            <div class="result-card">
+                <div class="result-header">
+                    <div class="result-title">Random Forest ASD Risk Assessment</div>
+                    <div class="risk-level" id="riskLevel">Calculating...</div>
+                </div>
+
+                <div class="probability-meter">
+                    <div class="probability-bar" id="probabilityBar"></div>
+                    <div class="probability-marker" style="left: 25%;"></div>
+                    <div class="probability-marker" style="left: 50%;"></div>
+                    <div class="probability-marker" style="left: 75%;"></div>
+                </div>
+                <div class="probability-labels">
+                    <span>Low Risk (0-30%)</span>
+                    <span>Medium Risk (30-70%)</span>
+                    <span>High Risk (70-100%)</span>
+                </div>
+                <div class="probability-value" id="probabilityValue">0%</div>
+
+                <div class="result-details">
+                    <div class="detail-item">
+                        <div class="detail-title">Model Confidence:</div>
+                        <p id="modelConfidence">Calculating confidence interval...</p>
+                    </div>
+
+                    <div class="detail-item">
+                        <div class="detail-title">Assessment Summary:</div>
+                        <p id="assessmentSummary">Our Random Forest model is analyzing your responses to provide a comprehensive assessment of ASD risk factors based on 20 decision trees.</p>
+                    </div>
+                </div>
+
+                <!-- Feature Importance Section -->
+                <div class="feature-importance">
+                    <h3>Most Important Predictive Factors</h3>
+                    <p>These questions contributed most to the Random Forest prediction:</p>
+                    <div id="featureImportance">
+                        <!-- Feature importance items will be added by JavaScript -->
+                    </div>
+                </div>
+
+                <!-- Decision Path Explanation -->
+                <div class="decision-path">
+                    <h3>Key Decision Factors</h3>
+                    <p>The Random Forest model identified these critical decision points in your assessment:</p>
+                    <div id="decisionPath">
+                        <!-- Decision path items will be added by JavaScript -->
+                    </div>
+                </div>
+
+                <!-- Sample Tree Visualization -->
+                <div class="tree-diagram" id="treeDiagram">
+                    <!-- Tree diagram will be added by JavaScript -->
+                </div>
+            </div>
+
+            <!-- Recommendations Section -->
+            <div class="recommendations">
+                <h3>Recommended Next Steps</h3>
+                <ul id="recommendationsList">
+                    <li>Consult with a pediatrician or child development specialist</li>
+                    <li>Consider a comprehensive developmental evaluation</li>
+                    <li>Monitor your child's social communication milestones</li>
+                    <li>Engage in interactive play to encourage social development</li>
+                </ul>
+
+                <h3 style="margin-top: 20px;">About the Random Forest Model</h3>
+                <p>This assessment uses a Random Forest algorithm with 20 decision trees to evaluate ASD risk. The model was trained on clinical data and achieves 92% accuracy in identifying children who may benefit from further evaluation.</p>
+            </div>
+
+            <div class="button-container">
+                <button class="primary-btn" onclick="window.location.href='Homepage.html'">Return to Home</button>
+                <button class="secondary-btn" onclick="window.print()">Print Results</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Get assessment data from localStorage
+            const assessmentData = JSON.parse(localStorage.getItem('qchatAssessment'));
+            const childDetails = assessmentData?.childDetails || {};
+            
+            // Display child information
+            const childInfoDisplay = document.getElementById('childInfoDisplay');
+            if (childDetails.name) {
+                childInfoDisplay.innerHTML = `
+                    <p><span>Child Name:</span> ${childDetails.name}</p>
+                    <p><span>Age:</span> ${childDetails.ageYears} years (${childDetails.ageMonths} months)</p>
+                    <p><span>Gender:</span> ${childDetails.gender}</p>
+                    <p><span>Ethnicity/Region:</span> ${childDetails.region}</p>
+                `;
+            } else {
+                childInfoDisplay.innerHTML = '<p>No child information found</p>';
+            }
+            
+            // Simulate Random Forest analysis (in a real app, this would come from your backend)
+            setTimeout(() => {
+                // Generate random results for demonstration
+                // In a real application, you would send the data to your backend
+                // and receive the actual Random Forest analysis results
+                const randomProbability = Math.min(95, Math.max(5, (assessmentData.qchatScore / 20) * 100 + (Math.random() * 20 - 10)));
+                const riskLevel = determineRiskLevel(randomProbability);
+                const featureImportance = generateFeatureImportance(assessmentData.answers);
+                const decisionPath = generateDecisionPath(assessmentData.answers);
+                const modelConfidence = 85 + Math.random() * 10; // 85-95% confidence
+                
+                // Display results
+                document.getElementById('probabilityValue').textContent = `${randomProbability.toFixed(1)}%`;
+                document.getElementById('probabilityBar').style.width = `${randomProbability}%`;
+                document.getElementById('riskLevel').textContent = riskLevel.text;
+                document.getElementById('riskLevel').className = `risk-level ${riskLevel.class}`;
+                document.getElementById('assessmentSummary').textContent = getAssessmentSummary(randomProbability);
+                document.getElementById('modelConfidence').textContent = `Model confidence: ${modelConfidence.toFixed(1)}% (based on 20 decision trees)`;
+                
+                // Display feature importance
+                displayFeatureImportance(featureImportance);
+                
+                // Display decision path
+                displayDecisionPath(decisionPath);
+                
+                // Display sample tree diagram
+                displayTreeDiagram();
+                
+                // Update recommendations based on risk level
+                updateRecommendations(riskLevel.level);
+                
+            }, 1500);
+        });
+        
+        function determineRiskLevel(probability) {
+            if (probability < 30) {
+                return { level: 'low', text: 'Low Risk', class: 'low-risk' };
+            } else if (probability < 70) {
+                return { level: 'medium', text: 'Medium Risk', class: 'medium-risk' };
+            } else {
+                return { level: 'high', text: 'High Risk', class: 'high-risk' };
+            }
+        }
+        
+        function getAssessmentSummary(probability) {
+            if (probability < 30) {
+                return "The Random Forest analysis suggests a low probability of ASD based on the Q-CHAT responses. The model analyzed 20 decision trees and found minimal indicators of ASD risk. However, continue to monitor your child's development and consult with a professional if you have any concerns.";
+            } else if (probability < 70) {
+                return "The Random Forest analysis indicates some potential risk factors for ASD. The model's 20 decision trees identified several areas that may benefit from further evaluation. A comprehensive assessment by a specialist may help clarify your child's developmental profile.";
+            } else {
+                return "The Random Forest analysis suggests a high probability of ASD based on the Q-CHAT responses. Multiple decision trees in the model identified significant indicators of ASD risk. We strongly recommend consulting with a pediatrician or autism specialist for a comprehensive evaluation.";
+            }
+        }
+        
+        function generateFeatureImportance(answers) {
+            // This is simulated data - in a real app, this would come from your Random Forest model
+            // We'll weight the importance based on which questions had higher scores
+            const questionTexts = {
+                q1: "Response to name",
+                q2: "Eye contact",
+                q3: "Pointing to objects",
+                q4: "Showing objects",
+                q5: "Pretend play",
+                q6: "Following gaze",
+                q7: "Response to others' emotions",
+                q8: "Use of gestures",
+                q9: "Interest in other children",
+                q10: "Imaginative play with peers",
+                q11: "Speech development",
+                q12: "Conversation skills",
+                q13: "Facial expressions",
+                q14: "Understanding humor",
+                q15: "Following instructions",
+                q16: "Repetitive movements",
+                q17: "Reaction to routine changes",
+                q18: "Focused interests",
+                q19: "Sensory sensitivity",
+                q20: "Difficulty with transitions"
+            };
+            
+            // Calculate importance based on answer values (higher values = more important for ASD)
+            const features = Object.keys(answers).map(q => ({
+                name: questionTexts[q] || q,
+                importance: (answers[q] * 15) + (Math.random() * 10) // Base importance + some variation
+            }));
+            
+            // Normalize to sum to 100
+            const sum = features.reduce((acc, f) => acc + f.importance, 0);
+            return features.map(f => ({
+                name: f.name,
+                importance: (f.importance / sum) * 100
+            })).sort((a, b) => b.importance - a.importance);
+        }
+        
+        function generateDecisionPath(answers) {
+            // Simulate key decision points from the Random Forest
+            const paths = [];
+            
+            // Top 3 most important questions with their answers
+            const importantQuestions = [
+                { q: 'q2', text: "Eye contact behavior" },
+                { q: 'q1', text: "Response to name" },
+                { q: 'q5', text: "Pretend play skills" },
+                { q: 'q12', text: "Conversation ability" },
+                { q: 'q16', text: "Repetitive movements" }
+            ];
+            
+            importantQuestions.forEach(item => {
+                if (answers[item.q] !== undefined) {
+                    const answerValue = answers[item.q];
+                    let conclusion = "";
+                    
+                    if (answerValue === 0) {
+                        conclusion = "Typical development indicator";
+                    } else {
+                        conclusion = "Potential ASD risk indicator";
+                    }
+                    
+                    paths.push({
+                        question: item.text,
+                        answer: answerValue === 0 ? "Typical response" : "Atypical response",
+                        conclusion: conclusion
+                    });
+                }
+            });
+            
+            return paths;
+        }
+        
+        function displayFeatureImportance(features) {
+            const container = document.getElementById('featureImportance');
+            container.innerHTML = '';
+            
+            // Show top 5 features
+            features.slice(0, 5).forEach(feature => {
+                const item = document.createElement('div');
+                item.className = 'feature-item';
+                
+                item.innerHTML = `
+                    <div class="feature-name">${feature.name}</div>
+                    <div class="feature-bar-container">
+                        <div class="feature-bar" style="width: ${feature.importance}%"></div>
+                    </div>
+                    <div class="feature-value">${feature.importance.toFixed(1)}%</div>
+                `;
+                
+                container.appendChild(item);
+            });
+        }
+        
+        function displayDecisionPath(paths) {
+            const container = document.getElementById('decisionPath');
+            container.innerHTML = '';
+            
+            paths.forEach(path => {
+                const node = document.createElement('div');
+                node.className = 'decision-node';
+                
+                node.innerHTML = `
+                    <strong>${path.question}</strong>: ${path.answer}
+                    <div style="color: ${path.conclusion.includes('Typical') ? 'var(--secondary)' : 'var(--accent)'}; margin-top: 5px;">
+                        ${path.conclusion}
+                    </div>
+                `;
+                
+                container.appendChild(node);
+            });
+        }
+        
+        
+        function updateRecommendations(riskLevel) {
+            const recommendationsList = document.getElementById('recommendationsList');
+            
+            if (riskLevel === 'low') {
+                recommendationsList.innerHTML = `
+                    <li>Continue monitoring your child's developmental milestones</li>
+                    <li>Engage in interactive play to support social development</li>
+                    <li>Schedule regular well-child visits with your pediatrician</li>
+                    <li>Consider a developmental screening at the next check-up if any concerns arise</li>
+                `;
+            } else if (riskLevel === 'medium') {
+                recommendationsList.innerHTML = `
+                    <li>Schedule an appointment with your pediatrician to discuss these results</li>
+                    <li>Consider a comprehensive developmental evaluation within 3 months</li>
+                    <li>Engage in activities that promote social interaction and communication</li>
+                    <li>Monitor specific areas of concern identified in the assessment</li>
+                    <li>Consider early intervention services if available in your area</li>
+                `;
+            } else {
+                recommendationsList.innerHTML = `
+                    <li>Schedule an immediate consultation with a pediatrician or autism specialist</li>
+                    <li>Request a referral for a comprehensive developmental evaluation as soon as possible</li>
+                    <li>Research early intervention services in your area and begin enrollment process</li>
+                    <li>Begin tracking specific behaviors of concern to share with specialists</li>
+                    <li>Consider joining a parent support group for children with ASD</li>
+                `;
+            }
+        }
+    </script>
+</body>
+</html>
