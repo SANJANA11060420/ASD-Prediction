@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project Team | Q-CHAT-10</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #ce6c2b;
+            --secondary-color: #2c3e50;
+            --light-bg: #f8f9fa;
+        }
+        
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--light-bg);
+            color: #333;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .navbar {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+        }
+
+        .navbar img {
+            height: 50px;
+            transition: transform 0.2s ease;
+        }
+
+        .navbar img:hover {
+            transform: scale(1.05);
+        }
+
+        .card {
+            width: 85%;
+            max-width: 600px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            padding: 40px;
+            text-align: center;
+            margin: 20px;
+        }
+
+        .card h2 {
+            font-size: 28px;
+            margin-bottom: 30px;
+            color: var(--secondary-color);
+            position: relative;
+        }
+
+        .card h2:after {
+            content: '';
+            display: block;
+            width: 60px;
+            height: 3px;
+            background: var(--primary-color);
+            margin: 10px auto;
+        }
+
+        .team-member {
+            padding: 15px;
+            margin: 15px 0;
+            background: rgba(206, 108, 43, 0.05);
+            border-radius: 6px;
+            text-align: left;
+        }
+
+        .member-id {
+            font-weight: 600;
+            color: var(--secondary-color);
+        }
+
+        .member-name {
+            color: #555;
+        }
+
+        @media (max-width: 768px) {
+            .card {
+                padding: 30px 20px;
+                width: 90%;
+            }
+            
+            .card h2 {
+                font-size: 24px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="navbar">
+        <a href="Homepage.html">
+            <img src="abs.png" alt="Q-CHAT-10 Logo">
+        </a>
+    </div>
+
+    <div class="card">
+        <h2>Project Team</h2>
+        
+        <div class="team-member">
+            <div class="member-id">22B81A6767</div>
+            <div class="member-name">E Akhil Kumar</div>
+        </div>
+        
+        <div class="team-member">
+            <div class="member-id">22B81A6795</div>
+            <div class="member-name">M Revanth Reddy</div>
+        </div>
+        
+        <div class="team-member">
+            <div class="member-id">22B81A67C6</div>
+            <div class="member-name">J Sanjana Murthy</div>
+        </div>
+    </div>
+</body>
+</html>

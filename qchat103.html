@@ -1,0 +1,606 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Q-CHAT Assessment</title>
+    <style>
+        :root {
+            --primary: #3498db;
+            --secondary: #2ecc71;
+            --accent: #e74c3c;
+            --light: #ecf0f1;
+            --dark: #2c3e50;
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            color: #333;
+            padding: 20px;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: var(--shadow);
+            overflow: hidden;
+            position: relative;
+        }
+
+        .logo {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            width: 80px;
+            height: auto;
+            cursor: pointer;
+            transition: var(--transition);
+            z-index: 10;
+        }
+
+        .logo:hover {
+            transform: scale(1.1);
+        }
+
+        header {
+            background: var(--primary);
+            color: white;
+            padding: 30px 20px 20px;
+            text-align: center;
+            position: relative;
+        }
+
+        h1 {
+            font-size: 28px;
+            margin-bottom: 10px;
+        }
+
+        .child-info {
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px auto;
+            max-width: 90%;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            box-shadow: var(--shadow);
+        }
+
+        .child-info p {
+            margin: 5px 0;
+            font-size: 16px;
+        }
+
+        .child-info span {
+            font-weight: 600;
+            color: var(--dark);
+        }
+
+        .assessment-form {
+            padding: 30px;
+        }
+
+        .question-group {
+            margin-bottom: 30px;
+        }
+
+        .question {
+            background: var(--light);
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+            transition: var(--transition);
+            border-left: 4px solid transparent;
+        }
+
+        .question:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--shadow);
+            border-left-color: var(--primary);
+        }
+
+        .question p {
+            font-weight: 600;
+            font-size: 18px;
+            margin-bottom: 15px;
+            color: var(--dark);
+        }
+
+        .options {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+            gap: 12px;
+        }
+
+        .option {
+            display: flex;
+            align-items: center;
+            background: white;
+            padding: 12px 15px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: var(--transition);
+            border: 1px solid #ddd;
+        }
+
+        .option:hover {
+            background: #e3f2fd;
+            border-color: var(--primary);
+        }
+
+        .option input {
+            margin-right: 10px;
+            cursor: pointer;
+        }
+
+        .additional-info {
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 25px;
+            margin-top: 30px;
+            border-left: 4px solid var(--secondary);
+        }
+
+        .additional-info h3 {
+            color: var(--primary);
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #eee;
+        }
+
+        select {
+            width: 100%;
+            padding: 12px;
+            border-radius: 8px;
+            border: 1px solid #ddd;
+            font-size: 16px;
+            margin-top: 10px;
+            transition: var(--transition);
+        }
+
+        select:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.2);
+        }
+
+        .button-container {
+            display: flex;
+            gap: 15px;
+            margin-top: 30px;
+        }
+
+        button {
+            flex: 1;
+            padding: 15px;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            color: white;
+        }
+
+        button[type="submit"] {
+            background: var(--primary);
+        }
+
+        button[type="submit"]:hover {
+            background: #2980b9;
+            transform: translateY(-2px);
+            box-shadow: var(--shadow);
+        }
+
+        button[type="button"] {
+            background: #7f8c8d;
+        }
+
+        button[type="button"]:hover {
+            background: #6c7a7d;
+            transform: translateY(-2px);
+            box-shadow: var(--shadow);
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                border-radius: 0;
+            }
+            
+            .options {
+                grid-template-columns: 1fr;
+            }
+            
+            .button-container {
+                flex-direction: column;
+            }
+            
+            .logo {
+                width: 60px;
+                top: 15px;
+                left: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <a href="Homepage.html">
+        <img src="abs.png" alt="Logo" class="logo">
+    </a>
+
+    <div class="container">
+        <header>
+            <h1>Q-CHAT Assessment</h1>
+        </header>
+
+        <div class="assessment-form">
+            <!-- Child Information Section -->
+            <div class="child-info" id="childInfoDisplay">
+                <!-- Child details will be inserted here by JavaScript -->
+            </div>
+
+            <form id="qchatForm">
+                <!-- Questions 1-10 -->
+                <div class="question-group">
+                    <h2>Social Communication</h2>
+                    
+                    <div class="question">
+                        <p>1. Does your child respond to their name when called?</p>
+                        <div class="options">
+                            <label class="option"><input type="radio" name="q1" value="0" required> Always</label>
+                            <label class="option"><input type="radio" name="q1" value="0"> Usually</label>
+                            <label class="option"><input type="radio" name="q1" value="1"> Sometimes</label>
+                            <label class="option"><input type="radio" name="q1" value="1"> Rarely</label>
+                            <label class="option"><input type="radio" name="q1" value="1"> Never</label>
+                        </div>
+                    </div>
+                    
+                    <div class="question">
+                        <p>2. How often does your child make eye contact with you?</p>
+                        <div class="options">
+                            <label class="option"><input type="radio" name="q2" value="0" required> Very often</label>
+                            <label class="option"><input type="radio" name="q2" value="0"> Often</label>
+                            <label class="option"><input type="radio" name="q2" value="1"> Sometimes</label>
+                            <label class="option"><input type="radio" name="q2" value="1"> Rarely</label>
+                            <label class="option"><input type="radio" name="q2" value="1"> Never</label>
+                        </div>
+                    </div>
+                    
+                    <div class="question">
+                        <p>3. Does your child point to objects they want?</p>
+                        <div class="options">
+                            <label class="option"><input type="radio" name="q3" value="0" required> Always</label>
+                            <label class="option"><input type="radio" name="q3" value="0"> Usually</label>
+                            <label class="option"><input type="radio" name="q3" value="1"> Sometimes</label>
+                            <label class="option"><input type="radio" name="q3" value="1"> Rarely</label>
+                            <label class="option"><input type="radio" name="q3" value="1"> Never</label>
+                        </div>
+                    </div>
+                    
+                    <div class="question">
+                        <p>4. Does your child bring objects to show you?</p>
+                        <div class="options">
+                            <label class="option"><input type="radio" name="q4" value="0" required> Always</label>
+                            <label class="option"><input type="radio" name="q4" value="0"> Usually</label>
+                            <label class="option"><input type="radio" name="q4" value="1"> Sometimes</label>
+                            <label class="option"><input type="radio" name="q4" value="1"> Rarely</label>
+                            <label class="option"><input type="radio" name="q4" value="1"> Never</label>
+                        </div>
+                    </div>
+                    
+                    <div class="question">
+                        <p>5. Does your child engage in pretend play?</p>
+                        <div class="options">
+                            <label class="option"><input type="radio" name="q5" value="0" required> Always</label>
+                            <label class="option"><input type="radio" name="q5" value="0"> Usually</label>
+                            <label class="option"><input type="radio" name="q5" value="1"> Sometimes</label>
+                            <label class="option"><input type="radio" name="q5" value="1"> Rarely</label>
+                            <label class="option"><input type="radio" name="q5" value="1"> Never</label>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Questions 6-10 -->
+                <div class="question-group">
+                    <h2>Social Interaction</h2>
+                    
+                    <div class="question">
+                        <p>6. Does your child follow your gaze when you look at something?</p>
+                        <div class="options">
+                            <label class="option"><input type="radio" name="q6" value="0" required> Always</label>
+                            <label class="option"><input type="radio" name="q6" value="0"> Usually</label>
+                            <label class="option"><input type="radio" name="q6" value="1"> Sometimes</label>
+                            <label class="option"><input type="radio" name="q6" value="1"> Rarely</label>
+                            <label class="option"><input type="radio" name="q6" value="1"> Never</label>
+                        </div>
+                    </div>
+                    
+                    <div class="question">
+                        <p>7. Does your child show concern when others are upset?</p>
+                        <div class="options">
+                            <label class="option"><input type="radio" name="q7" value="0" required> Always</label>
+                            <label class="option"><input type="radio" name="q7" value="0"> Usually</label>
+                            <label class="option"><input type="radio" name="q7" value="1"> Sometimes</label>
+                            <label class="option"><input type="radio" name="q7" value="1"> Rarely</label>
+                            <label class="option"><input type="radio" name="q7" value="1"> Never</label>
+                        </div>
+                    </div>
+                    
+                    <div class="question">
+                        <p>8. Does your child use gestures like waving or nodding?</p>
+                        <div class="options">
+                            <label class="option"><input type="radio" name="q8" value="0" required> Always</label>
+                            <label class="option"><input type="radio" name="q8" value="0"> Usually</label>
+                            <label class="option"><input type="radio" name="q8" value="1"> Sometimes</label>
+                            <label class="option"><input type="radio" name="q8" value="1"> Rarely</label>
+                            <label class="option"><input type="radio" name="q8" value="1"> Never</label>
+                        </div>
+                    </div>
+                    
+                    <div class="question">
+                        <p>9. Does your child show interest in other children?</p>
+                        <div class="options">
+                            <label class="option"><input type="radio" name="q9" value="0" required> Always</label>
+                            <label class="option"><input type="radio" name="q9" value="0"> Usually</label>
+                            <label class="option"><input type="radio" name="q9" value="1"> Sometimes</label>
+                            <label class="option"><input type="radio" name="q9" value="1"> Rarely</label>
+                            <label class="option"><input type="radio" name="q9" value="1"> Never</label>
+                        </div>
+                    </div>
+                    
+                    <div class="question">
+                        <p>10. Does your child show imaginative play with peers?</p>
+                        <div class="options">
+                            <label class="option"><input type="radio" name="q10" value="0" required> Always</label>
+                            <label class="option"><input type="radio" name="q10" value="0"> Usually</label>
+                            <label class="option"><input type="radio" name="q10" value="1"> Sometimes</label>
+                            <label class="option"><input type="radio" name="q10" value="1"> Rarely</label>
+                            <label class="option"><input type="radio" name="q10" value="1"> Never</label>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Questions 11-15 -->
+                <div class="question-group">
+                    <h2>Communication</h2>
+                    
+                    <div class="question">
+                        <p>11. How would you describe your child's speech development?</p>
+                        <div class="options">
+                            <label class="option"><input type="radio" name="q11" value="0" required> Very typical</label>
+                            <label class="option"><input type="radio" name="q11" value="0"> Quite typical</label>
+                            <label class="option"><input type="radio" name="q11" value="1"> Slightly delayed</label>
+                            <label class="option"><input type="radio" name="q11" value="1"> Very delayed</label>
+                            <label class="option"><input type="radio" name="q11" value="1"> No speech</label>
+                        </div>
+                    </div>
+                    
+                    <div class="question">
+                        <p>12. Does your child engage in back-and-forth conversation?</p>
+                        <div class="options">
+                            <label class="option"><input type="radio" name="q12" value="0" required> Always</label>
+                            <label class="option"><input type="radio" name="q12" value="0"> Usually</label>
+                            <label class="option"><input type="radio" name="q12" value="1"> Sometimes</label>
+                            <label class="option"><input type="radio" name="q12" value="1"> Rarely</label>
+                            <label class="option"><input type="radio" name="q12" value="1"> Never</label>
+                        </div>
+                    </div>
+                    
+                    <div class="question">
+                        <p>13. Does your child show appropriate facial expressions?</p>
+                        <div class="options">
+                            <label class="option"><input type="radio" name="q13" value="0" required> Always</label>
+                            <label class="option"><input type="radio" name="q13" value="0"> Usually</label>
+                            <label class="option"><input type="radio" name="q13" value="1"> Sometimes</label>
+                            <label class="option"><input type="radio" name="q13" value="1"> Rarely</label>
+                            <label class="option"><input type="radio" name="q13" value="1"> Never</label>
+                        </div>
+                    </div>
+                    
+                    <div class="question">
+                        <p>14. Does your child understand jokes or sarcasm?</p>
+                        <div class="options">
+                            <label class="option"><input type="radio" name="q14" value="0" required> Always</label>
+                            <label class="option"><input type="radio" name="q14" value="0"> Usually</label>
+                            <label class="option"><input type="radio" name="q14" value="1"> Sometimes</label>
+                            <label class="option"><input type="radio" name="q14" value="1"> Rarely</label>
+                            <label class="option"><input type="radio" name="q14" value="1"> Never</label>
+                        </div>
+                    </div>
+                    
+                    <div class="question">
+                        <p>15. Does your child understand simple instructions?</p>
+                        <div class="options">
+                            <label class="option"><input type="radio" name="q15" value="0" required> Always</label>
+                            <label class="option"><input type="radio" name="q15" value="0"> Usually</label>
+                            <label class="option"><input type="radio" name="q15" value="1"> Sometimes</label>
+                            <label class="option"><input type="radio" name="q15" value="1"> Rarely</label>
+                            <label class="option"><input type="radio" name="q15" value="1"> Never</label>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Questions 16-20 -->
+                <div class="question-group">
+                    <h2>Behavior Patterns</h2>
+                    
+                    <div class="question">
+                        <p>16. Does your child have unusual repetitive movements?</p>
+                        <div class="options">
+                            <label class="option"><input type="radio" name="q16" value="0" required> Never</label>
+                            <label class="option"><input type="radio" name="q16" value="0"> Rarely</label>
+                            <label class="option"><input type="radio" name="q16" value="1"> Sometimes</label>
+                            <label class="option"><input type="radio" name="q16" value="1"> Often</label>
+                            <label class="option"><input type="radio" name="q16" value="1"> Very often</label>
+                        </div>
+                    </div>
+                    
+                    <div class="question">
+                        <p>17. How does your child react to changes in routine?</p>
+                        <div class="options">
+                            <label class="option"><input type="radio" name="q17" value="0" required> Very well</label>
+                            <label class="option"><input type="radio" name="q17" value="0"> Quite well</label>
+                            <label class="option"><input type="radio" name="q17" value="1"> Some difficulty</label>
+                            <label class="option"><input type="radio" name="q17" value="1"> Much difficulty</label>
+                            <label class="option"><input type="radio" name="q17" value="1"> Extreme difficulty</label>
+                        </div>
+                    </div>
+                    
+                    <div class="question">
+                        <p>18. Does your child have intense or focused interests?</p>
+                        <div class="options">
+                            <label class="option"><input type="radio" name="q18" value="0" required> Not at all</label>
+                            <label class="option"><input type="radio" name="q18" value="0"> Mildly</label>
+                            <label class="option"><input type="radio" name="q18" value="1"> Moderately</label>
+                            <label class="option"><input type="radio" name="q18" value="1"> Very much</label>
+                            <label class="option"><input type="radio" name="q18" value="1"> Extremely</label>
+                        </div>
+                    </div>
+                    
+                    <div class="question">
+                        <p>19. How does your child respond to sensory stimuli (noises, textures)?</p>
+                        <div class="options">
+                            <label class="option"><input type="radio" name="q19" value="0" required> Normal</label>
+                            <label class="option"><input type="radio" name="q19" value="0"> Mildly sensitive</label>
+                            <label class="option"><input type="radio" name="q19" value="1"> Moderately sensitive</label>
+                            <label class="option"><input type="radio" name="q19" value="1"> Very sensitive</label>
+                            <label class="option"><input type="radio" name="q19" value="1"> Extremely sensitive</label>
+                        </div>
+                    </div>
+                    
+                    <div class="question">
+                        <p>20. Does your child have difficulty with transitions?</p>
+                        <div class="options">
+                            <label class="option"><input type="radio" name="q20" value="0" required> Never</label>
+                            <label class="option"><input type="radio" name="q20" value="0"> Rarely</label>
+                            <label class="option"><input type="radio" name="q20" value="1"> Sometimes</label>
+                            <label class="option"><input type="radio" name="q20" value="1"> Often</label>
+                            <label class="option"><input type="radio" name="q20" value="1"> Very often</label>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Additional Information Section -->
+                <div class="additional-info">
+                    <h3>Additional Information</h3>
+                    
+                    <div class="question">
+                        <p>Did your child have neonatal jaundice?</p>
+                        <div class="options">
+                            <label class="option"><input type="radio" name="neonatalJaundice" value="yes" required> Yes</label>
+                            <label class="option"><input type="radio" name="neonatalJaundice" value="no"> No</label>
+                        </div>
+                    </div>
+                    
+                    <div class="question">
+                        <p>Has any family member been diagnosed with ASD?</p>
+                        <div class="options">
+                            <label class="option"><input type="radio" name="familyHistory" value="yes" required> Yes</label>
+                            <label class="option"><input type="radio" name="familyHistory" value="no"> No</label>
+                        </div>
+                    </div>
+                    
+                    <div class="question">
+                        <p>Who is filling out this form?</p>
+                        <select name="filledBy" required>
+                            <option value="">Select an option</option>
+                            <option value="familyMember">Family Member</option>
+                            <option value="healthcareProfessional">Healthcare Professional</option>
+                            <option value="other">Other</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="button-container">
+                    <button type="submit">Submit Assessment</button>
+                    <button type="button" id="clearForm">Clear Form</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // Display child details from previous page
+        document.addEventListener('DOMContentLoaded', function() {
+            const childDetails = JSON.parse(localStorage.getItem('childDetails'));
+            const childInfoDisplay = document.getElementById('childInfoDisplay');
+            
+            if (childDetails) {
+                childInfoDisplay.innerHTML = `
+                    <p><span>Child Name:</span> ${childDetails.name}</p>
+                    <p><span>Age:</span> ${childDetails.ageYears} years (${childDetails.ageMonths} months)</p>
+                    <p><span>Gender:</span> ${childDetails.gender}</p>
+                    <p><span>Ethnicity/Region:</span> ${childDetails.region}</p>
+                `;
+            } else {
+                childInfoDisplay.innerHTML = '<p>No child information found. Please start from the beginning.</p>';
+            }
+        });
+
+        // Handle form submission
+        document.getElementById('qchatForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Calculate total score
+            let totalScore = 0;
+            const answers = {};
+            
+            for (let i = 1; i <= 20; i++) {
+                const selectedOption = document.querySelector(`input[name="q${i}"]:checked`);
+                if (selectedOption) {
+                    const value = parseInt(selectedOption.value);
+                    totalScore += value;
+                    answers[`q${i}`] = value;
+                }
+            }
+            
+            // Get additional information
+            const neonatalJaundice = document.querySelector('input[name="neonatalJaundice"]:checked')?.value;
+            const familyHistory = document.querySelector('input[name="familyHistory"]:checked')?.value;
+            const filledBy = document.querySelector('select[name="filledBy"]').value;
+            
+            // Get child details
+            const childDetails = JSON.parse(localStorage.getItem('childDetails')) || {};
+            
+            // Store the data in localStorage
+            const formData = {
+                childDetails: childDetails,
+                qchatScore: totalScore,
+                answers: answers,
+                additionalInfo: {
+                    neonatalJaundice: neonatalJaundice,
+                    familyHistory: familyHistory,
+                    filledBy: filledBy
+                },
+                timestamp: new Date().toISOString()
+            };
+            
+            localStorage.setItem('qchatAssessment', JSON.stringify(formData));
+            
+            // Redirect to results page
+            window.location.href = "SVMresult2.html";
+        });
+
+        // Handle clear form button
+        document.getElementById('clearForm').addEventListener('click', function() {
+            if (confirm('Are you sure you want to clear all your answers?')) {
+                document.getElementById('qchatForm').reset();
+            }
+        });
+    </script>
+</body>
+</html>
