@@ -1,8 +1,9 @@
 # Prediction of Autism using Machine Learning
 
+🧩 Autism Spectrum Disorder (ASD) is a neurodevelopmental condition often accompanied by unique sensory experiences — including increased sensitivity to sound 🔊, smell 👃, and touch ✋. Early detection is crucial, and thanks to the incredible strides in Artificial Intelligence 🤖 and Machine Learning (ML) 📊, predicting the possibility of a child being on the spectrum is now more achievable than ever — and at a much earlier stage.
 
-Autism Spectrum Disorder-ASD-a neuro developmental condition, is mostly joined with issues from sensory which means, sensitivity towards hearing, smell and touch. With the advancement of Artificial Intelligence and Machine Learning (ML), the prediction of a child being Autistic is possible at quite an early stage. 
-The major part of the existing literature on autism spectrum disorder is covered by a prediction system based on traditional machine learning algorithms such as Support Vector Machine, Random Forest, Decision Tress, Logistic Regression and the proposed models are validated by using performance measurement parameters such as accuracy and precision.
+📚 Most of the existing research in this field leans on traditional machine learning models like Support Vector Machine (SVM), Random Forest 🌳, Decision Trees 🌲, and Logistic Regression ➗. These models are typically validated using performance measures like accuracy 🎯 and precision 📏, ensuring reliable outcomes that aid early diagnosis.
 
+✨ Welcome to ASD Insight — your go-to platform for gaining meaningful, early insights into Autism Spectrum Disorder (ASD). Through our intuitive, AI-powered assessment tool 📱💡, individuals and families can explore potential early signs, get informed, and feel supported on their journey.
 
-Welcome to ASD Insight, A platform dedicated to helping individuals and families gain early insights into Autism Spectrum Disorder (ASD) through an intuitive and informative assessment tool.
+Whether you're a parent, caregiver, or simply curious, ASD Insight offers a simple, informative, and caring environment to learn more about ASD and how modern technology is helping shape better futures 🌈🧠.
